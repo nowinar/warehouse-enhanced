@@ -1,6 +1,8 @@
 from gi.repository import Adw, Gtk, GLib
 from enum import Enum
 import gettext
+import requests
+import bs4
 
 _ = gettext.gettext
 
@@ -9,7 +11,7 @@ class PackageDetailsDialog(Gtk.Dialog):
 	def __init__(self, parent, package):
 		# Initialize the dialog with the parent window
 		super().__init__(title=f"Package Details: {package.name}", transient_for=parent, use_header_bar=1, modal=True)
-
+		print(package, dir(package))
 		# Store the package reference
 		self.package = package
 
@@ -54,7 +56,6 @@ class PackageDetailsDialog(Gtk.Dialog):
 		info_group.add(version_row)
 		info_group.add(branch_row)
 		content_area.append(info_group)
-
 		# Add action buttons to the dialog
 		# self.add_button(_("Close"), Gtk.ResponseType.CLOSE)
 		open_url_button = self.add_button(_("Open Flatpak URL"), Gtk.ResponseType.APPLY)
@@ -75,6 +76,13 @@ class PackageDetailsDialog(Gtk.Dialog):
 
 		# Open the URL in the default browser
 		GLib.spawn_command_line_async(f"xdg-open '{url}'")
+
+	def app_id(self):
+		response = requests.get(f"https://flathub.org/apps/{self.package.app_id}")
+		if response.status_code == 200:
+			soup = bs4.BeautifulSoup(response.content, "html.parser")
+			data = soup.find_all("div", class_="relative m-2 flex h-[128px] min-w-[128px] self-center drop-shadow-md")
+			print(data[0].img["src"])
 
 
 # Function to show package details
