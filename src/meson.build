@@ -112,6 +112,7 @@ warehouse_sources = [
   'install_page/select_page.py',
   'install_page/results_page.py',
   'install_page/pending_page.py',
+  'install_page/show_package.py',
   '../data/style.css',
 ]
 

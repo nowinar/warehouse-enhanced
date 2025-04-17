@@ -58,6 +58,13 @@ class ResultRow(Adw.ActionRow):
 				self.set_tooltip_text(_("This Package is Already Installed"))
 				self.installed_image.set_visible(True)
 
+	def on_row_activated(self, row):
+		# Option 1: Open a new window with package details
+		self.show_package_details()
+
+		# Option 2: Open the Flatpak URL
+		# self.open_flatpak_url()
+
 	def __init__(self, package, package_state, origin_list_box, **kwargs):
 		super().__init__(**kwargs)
 

@@ -2,6 +2,11 @@ from gi.repository import Adw, Gtk
 from src.host_info import HostInfo
 from src.install_page.result_row import ResultRow
 import gettext
+import sys
+
+sys.path.append("/app/share/warehouse/src")
+
+from .show_package import show_package_details
 
 _ = gettext.gettext
 
@@ -70,7 +75,8 @@ class PendingPage(Adw.NavigationPage):
 			self.groups[key] = group
 			self.preferences_page.add(group)
 
-		added_row.connect("activated", self.remove_package_row, group)
+		# added_row.connect("activated", self.remove_package_row, group)
+		added_row.connect("activated", show_package_details)
 		self.stack.set_visible_child(self.main_view)
 
 	def remove_package_row(self, row, group):

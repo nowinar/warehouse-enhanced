@@ -82,9 +82,9 @@ class ResultsPage(Adw.NavigationPage):
 					text=True,
 					capture_output=True,
 				).stdout.split("\n")
-				if len(output) > 100:
-					GLib.idle_add(lambda *_: self.stack.set_visible_child(self.too_many))
-					return
+				# if len(output) > 100:
+				# 	GLib.idle_add(lambda *_: self.stack.set_visible_child(self.too_many))
+				# 	return
 
 				for line in output:
 					line = line.strip()

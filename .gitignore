@@ -5,3 +5,4 @@
 .idea/
 .ruff_cache/
 .vscode
+venv/
